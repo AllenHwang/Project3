@@ -83,30 +83,63 @@ public class Main {
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
 		
 		ArrayList<String> answer = new ArrayList();
-		if(start == null || end == null || start.length() != end.length()||start.equals(end))
+		List<String> paths = new LinkedList<String>();
+		paths.add(start);
+		Queue<WordLadder> queue = new LinkedList<WordLadder>();
+		queue.add(new WordLadder(paths, 1, start));
+		
+		dictionary.remove(start);//remember to readd the start word before return the array list
+		while(!queue.isEmpty() && !queue.peek().equals(end))
+		{
+			WordLadder temp = queue.remove();
+			
+			if(end.equals(temp.getLastWord())){
+			return answer; //have a method in word Ladder that can let it output an arraylist
+			}
+		}
+		return null;
+		/*if(start == null || end == null || start.length() != end.length()||start.equals(end))
 			return answer;
 		answer.add(start);
 		dictionary.remove(start);
-		Queue<String> paths = new LinkedList<String>();
+		Queue<ArrayList<String>> paths = new LinkedList<ArrayList<String>>();
 		HashSet<String> test = new HashSet<String>();
 		paths.offer(start);
 		while(!paths.isEmpty()&&!paths.peek().equals(end))
 		{
-			int size = paths.size();
+			
+			
+			/*	int size = paths.size();
 			for(int i = 0; i < size; i++)
 			{
 				String curr = paths.poll();
 				for(int j = 0; j < curr.length(); j++)
 				{
-					
+					char[] currentChar = curr.toCharArray();
+					for(char c = 'a'; c <'z'; c++)
+					{
+						currentChar[j] = c;
+						String newString = new String(currentChar);
+						if(newString.equals(end))
+						{
+							//does stuff to get answer;
+							return answer;
+						}
+						else
+						{
+							if(dictionary.contains(newString)&& !test.contains(newString))
+							{
+								paths.offer(newString);
+								test.add(newString);
+							}
+						}
+					}
 				}
-			}
-		}
+			}*/
+	}
 		// TODO some code
 		// TODO more code
 		
-		return null; // replace this line later with real return
-	}
     
 	public static Set<String>  makeDictionary () {
 		Set<String> words = new HashSet<String>();
@@ -126,6 +159,23 @@ public class Main {
 	
 	public static void printLadder(ArrayList<String> ladder) {
 		
+	}
+	
+	private boolean differByOne(String word1, String word2)
+	{
+		if (word1.length() != word2.length())
+		{
+			return false;
+		}
+		int diffCount = 0;
+		for(int i = 0; i < word1.length(); i++)
+		{
+			if (word1.charAt(i) != word2.charAt(i))
+			{
+				diffCount++;
+			}
+		}
+		return (diffCount == 1);
 	}
 	// TODO
 	// Other private static methods here
