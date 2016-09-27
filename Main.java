@@ -69,7 +69,7 @@ public class Main {
 	public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		
 		ArrayList<String> answer = new ArrayList();
-		if(start == null || end == null || start.length() != end.length())
+		if(start == null || end == null || start.length() != end.length()||start.equals(end))
 			return answer;
 		
 		// Returned list should be ordered start to end.  Include start and end.
@@ -83,10 +83,25 @@ public class Main {
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
 		
 		ArrayList<String> answer = new ArrayList();
-		if(start == null || end == null || start.length() != end.length())
+		if(start == null || end == null || start.length() != end.length()||start.equals(end))
 			return answer;
-		//This is a test change for use w/ gitHub.
-		//MORE TESTS
+		answer.add(start);
+		dictionary.remove(start);
+		Queue<String> paths = new LinkedList<String>();
+		HashSet<String> test = new HashSet<String>();
+		paths.offer(start);
+		while(!paths.isEmpty()&&!paths.peek().equals(end))
+		{
+			int size = paths.size();
+			for(int i = 0; i < size; i++)
+			{
+				String curr = paths.poll();
+				for(int j = 0; j < curr.length(); j++)
+				{
+					
+				}
+			}
+		}
 		// TODO some code
 		// TODO more code
 		
