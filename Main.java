@@ -62,7 +62,10 @@ public class Main {
 		ArrayList<String> answer = new ArrayList<String>();
 		input = input.toLowerCase();
 		if(input.equals("/quit"))
-			return answer;
+		{
+		System.exit(0);
+		return answer;
+		}
 		else
 		{
 			int spaceIndex = input.indexOf(' ');
@@ -165,7 +168,7 @@ public class Main {
 			System.out.println("no ladder exists between <start> and <second>");
 		}
 		else{
-		System.out.println("a " + rung + "" + "-rung ladder exists between " +ladder.get(0) + " and " + ladder.get(rung - 1));
+		System.out.println("a " + (rung -2) + "" + "-rung ladder exists between " +ladder.get(0) + " and " + ladder.get(rung - 1));
 		while(!ladder.isEmpty())
 			{
 			
