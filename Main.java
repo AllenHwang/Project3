@@ -37,7 +37,12 @@ public class Main {
 		}
 		initialize();
 		// TODO methods to read in words, output ladder
-		String input = kb.nextLine();
+		System.out.println("Here's a test, type something in:");
+		ArrayList<String> toParse = parse(kb);
+		System.out.println(toParse.get(0));
+		System.out.println(toParse.get(1));
+		//Use ArrayList head and getLast for the testing;
+		
 	}
 	
 	public static void initialize() {
@@ -54,7 +59,7 @@ public class Main {
 	 */
 	public static ArrayList<String> parse(Scanner keyboard) {
 		String input = keyboard.nextLine();
-		ArrayList<String> answer = new ArrayList();
+		ArrayList<String> answer = new ArrayList<String>();
 		if(input.equals("/quit"))
 			return answer;
 		else
@@ -68,7 +73,7 @@ public class Main {
 	
 	public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		
-		ArrayList<String> answer = new ArrayList();
+		ArrayList<String> answer = new ArrayList<String>();
 		if(start == null || end == null || start.length() != end.length()||start.equals(end))
 			return answer;
 		
@@ -82,7 +87,7 @@ public class Main {
 	
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
 		
-		ArrayList<String> answer = new ArrayList();
+		ArrayList<String> answer = new ArrayList<String>();
 		List<String> paths = new LinkedList<String>();
 		paths.add(start);
 		Queue<WordLadder> queue = new LinkedList<WordLadder>();
@@ -175,20 +180,27 @@ public class Main {
 		Set<String> words = new HashSet<String>();
 		Scanner infile = null;
 		try {
-			infile = new Scanner (new File("five_letter_words.txt"));
+			//infile = new Scanner (new File("five_letter_words.txt"));
+			infile = new Scanner (new File("short_dict.txt"));
 		} catch (FileNotFoundException e) {
 			System.out.println("Dictionary File not Found!");
 			e.printStackTrace();
 			System.exit(1);
 		}
 		while (infile.hasNext()) {
-			words.add(infile.next().toUpperCase());
+			words.add(infile.next().toLowerCase());
 		}
 		return words;
 	}
 	
 	public static void printLadder(ArrayList<String> ladder) {
-		
+		if(ladder.isEmpty())
+			System.out.println("Insert Condition for an empty Ladder");
+		while(!ladder.isEmpty())
+		{
+			String print = ladder.remove(0);
+			System.out.println(print);
+		}
 	}
 	
 	private static boolean differByOne(String word1, String word2)
