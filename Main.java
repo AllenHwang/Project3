@@ -39,8 +39,8 @@ public class Main {
 		// TODO methods to read in words, output ladder
 		System.out.println("Here's a test, type something in:");
 		ArrayList<String> toParse = parse(kb);
-		System.out.println(toParse.get(0));
-		System.out.println(toParse.get(1));
+		ArrayList<String> test = getWordLadderBFS(toParse.get(0), toParse.get(1));
+		printLadder(test);
 		//Use ArrayList head and getLast for the testing;
 		
 	}
@@ -60,6 +60,7 @@ public class Main {
 	public static ArrayList<String> parse(Scanner keyboard) {
 		String input = keyboard.nextLine();
 		ArrayList<String> answer = new ArrayList<String>();
+		input = input.toLowerCase();
 		if(input.equals("/quit"))
 			return answer;
 		else
@@ -133,44 +134,6 @@ public class Main {
 			return answer;
 		}
 		return answer;
-		/*if(start == null || end == null || start.length() != end.length()||start.equals(end))
-			return answer;
-		answer.add(start);
-		dictionary.remove(start);
-		Queue<ArrayList<String>> paths = new LinkedList<ArrayList<String>>();
-		HashSet<String> test = new HashSet<String>();
-		paths.offer(start);
-		while(!paths.isEmpty()&&!paths.peek().equals(end))
-		{
-			
-			
-			/*	int size = paths.size();
-			for(int i = 0; i < size; i++)
-			{
-				String curr = paths.poll();
-				for(int j = 0; j < curr.length(); j++)
-				{
-					char[] currentChar = curr.toCharArray();
-					for(char c = 'a'; c <'z'; c++)
-					{
-						currentChar[j] = c;
-						String newString = new String(currentChar);
-						if(newString.equals(end))
-						{
-							//does stuff to get answer;
-							return answer;
-						}
-						else
-						{
-							if(dictionary.contains(newString)&& !test.contains(newString))
-							{
-								paths.offer(newString);
-								test.add(newString);
-							}
-						}
-					}
-				}
-			}*/
 	}
 		// TODO some code
 		// TODO more code
@@ -195,11 +158,18 @@ public class Main {
 	
 	public static void printLadder(ArrayList<String> ladder) {
 		int rung = ladder.size();
+		if(!ladder.isEmpty()){
+		System.out.println("a " + rung + "" + "-rung ladder exists between " +ladder.get(0) + " and " + ladder.get(rung - 1));
 		while(!ladder.isEmpty())
+			{
+			
+				String print = ladder.remove(0);
+				System.out.println(print);
+			}
+		}
+		else if(!differByOne(ladder.get(0), ladder.get(1)))
 		{
-			System.out.println("A " + rung + "" + "-rung ladder exists between " +ladder.get(0) + " and " + ladder.get(rung - 1));
-			String print = ladder.remove(0);
-			System.out.println(print);
+			System.out.println("no rung ladder exists between " +ladder.get(0)+ " and " + ladder.get(1));
 		}
 	}
 	
