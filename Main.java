@@ -65,8 +65,8 @@ public class Main {
 		else
 		{
 			int spaceIndex = input.indexOf(' ');
-			answer.add(input.substring(0, spaceIndex));
-			answer.add(input.substring(spaceIndex+1, input.length()));
+			answer.add(input.substring(0, spaceIndex).toLowerCase());
+			answer.add(input.substring(spaceIndex+1, input.length()).toLowerCase());
 			return answer;
 		}
 	}
@@ -194,13 +194,18 @@ public class Main {
 	}
 	
 	public static void printLadder(ArrayList<String> ladder) {
-		if(ladder.isEmpty())
-			System.out.println("Insert Condition for an empty Ladder");
+		int rung = ladder.size();
 		while(!ladder.isEmpty())
 		{
+			System.out.println("A " + rung + "" + "-rung ladder exists between " +ladder.get(0) + " and " + ladder.get(rung - 1));
 			String print = ladder.remove(0);
 			System.out.println(print);
 		}
+	}
+	
+	public static void noLadder(ArrayList<String> original)
+	{
+		System.out.println("no word ladder exists between " +original.get(0) + " and " + original.get(1));
 	}
 	
 	private static boolean differByOne(String word1, String word2)
