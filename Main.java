@@ -94,10 +94,40 @@ public class Main {
 			WordLadder temp = queue.remove();
 			
 			if(end.equals(temp.getLastWord())){
-			return answer; //have a method in word Ladder that can let it output an arraylist
+				List<String> toUse = temp.getPath();
+				int size = toUse.size();
+				String[] preAnswer = toUse.toArray(new String[size]);
+				for(int i = 0; i < preAnswer.length; i ++)
+					answer.add(preAnswer[i]);
+				remake();
+				return answer;
+			}
+			Iterator<String> it = dictionary.iterator();
+			while(it.hasNext())
+			{
+				String dictTemp = it.next();
+				if(differByOne(dictTemp, temp.getLastWord()))
+				{
+					List<String> list = new LinkedList<String>(temp.getPath());
+					list.add(dictTemp);
+					
+					queue.add(new WordLadder(list, temp.getLength() + 1, dictTemp));
+					it.remove();
+				}
 			}
 		}
-		return null;
+		if(!queue.isEmpty())
+		{
+			WordLadder last = queue.peek();
+			List<String> toUse = last.getPath();
+			int size = toUse.size();
+			String[] preAnswer = toUse.toArray(new String[size]);
+			for(int i = 0; i < preAnswer.length; i ++)
+				answer.add(preAnswer[i]);
+			remake();
+			return answer;
+		}
+		return answer;
 		/*if(start == null || end == null || start.length() != end.length()||start.equals(end))
 			return answer;
 		answer.add(start);
@@ -161,7 +191,7 @@ public class Main {
 		
 	}
 	
-	private boolean differByOne(String word1, String word2)
+	private static boolean differByOne(String word1, String word2)
 	{
 		if (word1.length() != word2.length())
 		{
@@ -176,6 +206,11 @@ public class Main {
 			}
 		}
 		return (diffCount == 1);
+	}
+	
+	private static void remake()
+	{
+		dictionary = makeDictionary();
 	}
 	// TODO
 	// Other private static methods here
