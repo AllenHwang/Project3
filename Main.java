@@ -143,8 +143,8 @@ public class Main {
 		Set<String> words = new HashSet<String>();
 		Scanner infile = null;
 		try {
-			//infile = new Scanner (new File("five_letter_words.txt"));
-			infile = new Scanner (new File("short_dict.txt"));
+			infile = new Scanner (new File("five_letter_words.txt"));
+			//infile = new Scanner (new File("short_dict.txt"));
 		} catch (FileNotFoundException e) {
 			System.out.println("Dictionary File not Found!");
 			e.printStackTrace();
@@ -158,7 +158,13 @@ public class Main {
 	
 	public static void printLadder(ArrayList<String> ladder) {
 		int rung = ladder.size();
-		if(!ladder.isEmpty()){
+		if(rung == 0)
+			return;
+		else if(rung == 2)
+		{
+			System.out.println("no ladder exists between <start> and <second>");
+		}
+		else{
 		System.out.println("a " + rung + "" + "-rung ladder exists between " +ladder.get(0) + " and " + ladder.get(rung - 1));
 		while(!ladder.isEmpty())
 			{
@@ -166,10 +172,6 @@ public class Main {
 				String print = ladder.remove(0);
 				System.out.println(print);
 			}
-		}
-		else if(!differByOne(ladder.get(0), ladder.get(1)))
-		{
-			System.out.println("no rung ladder exists between " +ladder.get(0)+ " and " + ladder.get(1));
 		}
 	}
 	
