@@ -3,14 +3,15 @@
  * Replace <...> with your actual data.
  * Allen Hwang
  * ah45755
- * <Student1 5-digit Unique No.>
+ * 16445
  * Paris Kaman
  * pak679
- * <Student2 5-digit Unique No.>
+ * 16445
  * Slip days used: <0>
  * Git URL:
  * Fall 2016
  */
+
 
 
 package assignment3;
@@ -20,7 +21,8 @@ import java.io.*;
 public class Main {
 	
 	private static Set<String> dictionary;
-	static ArrayList<String> checked;
+	private static String start, end;
+	private static ArrayList<String> checked;
 	// static variables and constants only here.
 	
 	public static void main(String[] args) throws Exception {
@@ -40,7 +42,9 @@ public class Main {
 		// TODO methods to read in words, output ladder
 		System.out.println("Here's a test, type something in:");
 		ArrayList<String> toParse = parse(kb);
-		ArrayList<String> test = getWordLadderDFS(toParse.get(0), toParse.get(1));
+		start = toParse.get(0);
+		end = toParse.get(1);
+		ArrayList<String> test = getWordLadderBFS(toParse.get(0), toParse.get(1));
 		printLadder(test);
 		//Use ArrayList head and getLast for the testing;
 		
@@ -151,10 +155,14 @@ public class Main {
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
 		
 		ArrayList<String> answer = new ArrayList<String>();
+		if(start == null || end == null || start.length() != end.length())
+			return answer;
+		start = start.toUpperCase();
+		end = end.toUpperCase();
 		List<String> paths = new LinkedList<String>();
 		paths.add(start);
 		Queue<WordLadder> queue = new LinkedList<WordLadder>();
-		queue.add(new WordLadder(paths, 1, start));
+		queue.add(new WordLadder(paths, start));
 		
 		dictionary.remove(start);//remember to readd the start word before return the array list
 		while(!queue.isEmpty() && !queue.peek().equals(end))
@@ -179,7 +187,7 @@ public class Main {
 					List<String> list = new LinkedList<String>(temp.getPath());
 					list.add(dictTemp);
 					
-					queue.add(new WordLadder(list, temp.getLength() + 1, dictTemp));
+					queue.add(new WordLadder(list, dictTemp));
 					it.remove();
 				}
 			}
@@ -197,12 +205,14 @@ public class Main {
 		}
 		return answer;
 	}
+		
     
 	public static Set<String>  makeDictionary () {
 		Set<String> words = new HashSet<String>();
 		Scanner infile = null;
 		try {
 			infile = new Scanner (new File("five_letter_words.txt"));
+			//infile = new Scanner (new File("short_dict.txt"));
 		} catch (FileNotFoundException e) {
 			System.out.println("Dictionary File not Found!");
 			e.printStackTrace();
@@ -214,9 +224,31 @@ public class Main {
 		return words;
 	}
 	
-
-	// TODO
-	// Other private static methods here
+	public static void printLadder(ArrayList<String> ladder) {
+		int rung = ladder.size();
+		if(rung == 0)
+		{	if(start == null || end == null){
+				System.out.println("no ladder exists at all.");
+				return;
+			}
+			else{
+				System.out.println("no ladder exists between " + start + " and " + end);
+				return;
+			}
+		}
+			else if(rung == 2&&!differByOne(ladder.get(0),ladder.get(1)))
+		{
+			System.out.println("no ladder exists between " + ladder.get(0).toLowerCase() + " and " + ladder.get(1).toLowerCase());
+		}
+		else{
+		System.out.println("a " + (rung -2) + "" + "-rung ladder exists between " +ladder.get(0).toLowerCase() + " and " + ladder.get(rung - 1).toLowerCase());
+		while(!ladder.isEmpty())
+			{			
+				String print = ladder.remove(0);
+				System.out.println(print.toLowerCase());
+			}
+		}
+	}
 	private static boolean inDictionary(String s){
 		
 		Iterator<String> dict = dictionary.iterator();
@@ -232,30 +264,6 @@ public class Main {
 	
 	private static boolean beenChecked(String s){
 		return checked.contains(s);
-	}
-
-	public static void printLadder(ArrayList<String> ladder) {
-		int rung = ladder.size();
-		if(rung == 0)
-			return;
-		else if(rung == 2)
-		{
-			System.out.println("no ladder exists between <start> and <second>");
-		}
-		else{
-		System.out.println("a " + (rung -2) + "" + "-rung ladder exists between " +ladder.get(0) + " and " + ladder.get(rung - 1));
-		while(!ladder.isEmpty())
-			{
-			
-				String print = ladder.remove(0);
-				System.out.println(print);
-			}
-		}
-	}
-	
-	public static void noLadder(ArrayList<String> original)
-	{
-		System.out.println("no word ladder exists between " +original.get(0) + " and " + original.get(1));
 	}
 	
 	private static boolean differByOne(String word1, String word2)
@@ -279,6 +287,6 @@ public class Main {
 	{
 		dictionary = makeDictionary();
 	}
-
-	
+	// TODO
+	// Other private static methods here
 }
