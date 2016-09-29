@@ -20,6 +20,7 @@ import java.io.*;
 public class Main {
 	
 	private static Set<String> dictionary;
+	private static String start, end;
 	// static variables and constants only here.
 	
 	public static void main(String[] args) throws Exception {
@@ -39,6 +40,8 @@ public class Main {
 		// TODO methods to read in words, output ladder
 		System.out.println("Here's a test, type something in:");
 		ArrayList<String> toParse = parse(kb);
+		start = toParse.get(0).toLowerCase();
+		end = toParse.get(1).toLowerCase();
 		ArrayList<String> test = getWordLadderBFS(toParse.get(0), toParse.get(1));
 		printLadder(test);
 		//Use ArrayList head and getLast for the testing;
@@ -69,8 +72,8 @@ public class Main {
 		else
 		{
 			int spaceIndex = input.indexOf(' ');
-			answer.add(input.substring(0, spaceIndex).toLowerCase());
-			answer.add(input.substring(spaceIndex+1, input.length()).toLowerCase());
+			answer.add(input.substring(0, spaceIndex).toUpperCase());
+			answer.add(input.substring(spaceIndex+1, input.length()).toUpperCase());
 			return answer;
 		}
 	}
@@ -95,7 +98,7 @@ public class Main {
 		List<String> paths = new LinkedList<String>();
 		paths.add(start);
 		Queue<WordLadder> queue = new LinkedList<WordLadder>();
-		queue.add(new WordLadder(paths, 1, start));
+		queue.add(new WordLadder(paths, start));
 		
 		dictionary.remove(start);//remember to readd the start word before return the array list
 		while(!queue.isEmpty() && !queue.peek().equals(end))
@@ -120,7 +123,7 @@ public class Main {
 					List<String> list = new LinkedList<String>(temp.getPath());
 					list.add(dictTemp);
 					
-					queue.add(new WordLadder(list, temp.getLength() + 1, dictTemp));
+					queue.add(new WordLadder(list, dictTemp));
 					it.remove();
 				}
 			}
@@ -138,8 +141,6 @@ public class Main {
 		}
 		return answer;
 	}
-		// TODO some code
-		// TODO more code
 		
     
 	public static Set<String>  makeDictionary () {
@@ -154,33 +155,36 @@ public class Main {
 			System.exit(1);
 		}
 		while (infile.hasNext()) {
-			words.add(infile.next().toLowerCase());
+			words.add(infile.next().toUpperCase());
 		}
 		return words;
 	}
 	
 	public static void printLadder(ArrayList<String> ladder) {
 		int rung = ladder.size();
+		boolean status = differByOne(ladder.get(0),ladder.get(1));
 		if(rung == 0)
-			return;
-		else if(rung == 2)
-		{
-			System.out.println("no ladder exists between <start> and <second>");
-		}
-		else{
-		System.out.println("a " + (rung -2) + "" + "-rung ladder exists between " +ladder.get(0) + " and " + ladder.get(rung - 1));
-		while(!ladder.isEmpty())
-			{
-			
-				String print = ladder.remove(0);
-				System.out.println(print);
+		{	if(start == null || end == null){
+				System.out.println("no ladder exists at all.");
+				return;
+			}
+			else{
+				System.out.println("no ladder exists between " + start + " and " + end);
+				return;
 			}
 		}
-	}
-	
-	public static void noLadder(ArrayList<String> original)
-	{
-		System.out.println("no word ladder exists between " +original.get(0) + " and " + original.get(1));
+			else if(rung == 2&&!status)
+		{
+			System.out.println("no ladder exists between " + ladder.get(0).toLowerCase() + " and " + ladder.get(1).toLowerCase());
+		}
+		else{
+		System.out.println("a " + (rung -2) + "" + "-rung ladder exists between " +ladder.get(0).toLowerCase() + " and " + ladder.get(rung - 1).toLowerCase());
+		while(!ladder.isEmpty())
+			{			
+				String print = ladder.remove(0);
+				System.out.println(print.toLowerCase());
+			}
+		}
 	}
 	
 	private static boolean differByOne(String word1, String word2)

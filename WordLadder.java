@@ -2,35 +2,28 @@ package assignment3;
 import java.util.*;
 
 public class WordLadder {
-	 private List<String> path;  //For storing path
-	 private String lastWord;  //For storing last word of path
-	 private int length;   //Length of the path.
-	 
+	 private List<String> potentialLadder; //A given "ladder"
+	 private String lastWord;  
+
 	 public WordLadder(List<String> path) {
-	  this.path=path;
+	  this.potentialLadder=path;
 	 }
 	 
-	 public WordLadder(List<String> path, int length, String lastWord) {
-	  this.path=path;
-	  this.length=length;
+	 public WordLadder(List<String> path, String lastWord) {
+	  this.potentialLadder=path;
+
 	  this.lastWord=lastWord;
 	 }
 	 public List<String> getPath() {
-	  return path;
-	 }
-	 public int getLength() {
-	  return length;
+	  return potentialLadder;
 	 }
 	 public String getLastWord() {
 	  return lastWord;
 	 }
 	 
 	 public void setPath(List<String> path) {
-	  this.path = path;
+	  this.potentialLadder = path;
 	 }
-	 
-	 public void setLength(int length) {
-	  this.length = length;
-	 }
+
 }
 
