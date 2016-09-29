@@ -50,8 +50,10 @@ public class Main {
 		ArrayList<String> toParse = parse(kb);
 		start = toParse.get(0);
 		end = toParse.get(1);
-		ArrayList<String> test = getWordLadderBFS(toParse.get(0), toParse.get(1));
-		printLadder(test);
+		//ArrayList<String> test = getWordLadderBFS(toParse.get(0), toParse.get(1));
+		ArrayList<String> DFS = getWordLadderDFS(toParse.get(0), toParse.get(1));
+		//printLadder(test);
+		printLadder(DFS);
 		//Use ArrayList head and getLast for the testing;
 		
 		//Result result = JUnitCore.runClasses(TestJUnit.class);
@@ -218,7 +220,6 @@ public class Main {
 		Scanner infile = null;
 		try {
 			infile = new Scanner (new File("five_letter_words.txt"));
-			//infile = new Scanner (new File("short_dict.txt"));
 		} catch (FileNotFoundException e) {
 			System.out.println("Dictionary File not Found!");
 			e.printStackTrace();
@@ -248,9 +249,9 @@ public class Main {
 		}
 		else{
 		System.out.println("a " + (rung -2) + "" + "-rung ladder exists between " +ladder.get(0).toLowerCase() + " and " + ladder.get(rung - 1).toLowerCase());
-		while(!ladder.isEmpty())
+		for(int i = 0; i < rung; i++)
 			{			
-				String print = ladder.remove(0);
+				String print = ladder.get(i);
 				System.out.println(print.toLowerCase());
 			}
 		}
