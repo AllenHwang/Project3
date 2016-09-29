@@ -8,7 +8,7 @@
  * pak679
  * 16445
  * Slip days used: <0>
- * Git URL:
+ * Git URL: https://github.com/HorizonStrider/Project3
  * Fall 2016
  */
 
@@ -16,6 +16,10 @@
 
 package assignment3;
 import java.util.*;
+
+//import org.junit.runner.JUnitCore;
+//import org.junit.runner.Result;
+
 import java.io.*;
 
 public class Main {
@@ -40,6 +44,8 @@ public class Main {
 		}
 		initialize();
 		// TODO methods to read in words, output ladder
+		ArrayList<String> empty = new ArrayList<String>();
+		printLadder(empty);
 		System.out.println("Here's a test, type something in:");
 		ArrayList<String> toParse = parse(kb);
 		start = toParse.get(0);
@@ -48,6 +54,8 @@ public class Main {
 		printLadder(test);
 		//Use ArrayList head and getLast for the testing;
 		
+		//Result result = JUnitCore.runClasses(TestJUnit.class);
+		//System.out.println(result.wasSuccessful());
 	}
 	
 	public static void initialize() {
@@ -66,7 +74,7 @@ public class Main {
 	public static ArrayList<String> parse(Scanner keyboard) {
 		String input = keyboard.nextLine();
 		ArrayList<String> answer = new ArrayList<String>();
-		input = input.toLowerCase();
+		input = input.toLowerCase().trim();
 		if(input.equals("/quit"))
 		{
 		System.exit(0);
@@ -91,7 +99,7 @@ public class Main {
 		// Return empty list if no ladder.
 		
 		checked.add(start);
-		
+		remake();
 		if(start.equals(end)){
 			answer.add(start);
 			return answer;
@@ -153,7 +161,7 @@ public class Main {
 	}
 	
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
-		
+		remake();
 		ArrayList<String> answer = new ArrayList<String>();
 		if(start == null || end == null || start.length() != end.length())
 			return answer;
@@ -175,7 +183,6 @@ public class Main {
 				String[] preAnswer = toUse.toArray(new String[size]);
 				for(int i = 0; i < preAnswer.length; i ++)
 					answer.add(preAnswer[i]);
-				remake();
 				return answer;
 			}
 			Iterator<String> it = dictionary.iterator();
@@ -200,7 +207,6 @@ public class Main {
 			String[] preAnswer = toUse.toArray(new String[size]);
 			for(int i = 0; i < preAnswer.length; i ++)
 				answer.add(preAnswer[i]);
-			remake();
 			return answer;
 		}
 		return answer;

@@ -8,7 +8,7 @@
  * pak679
  * 16445
  * Slip days used: <0>
- * Git URL:
+ * Git URL: https://github.com/HorizonStrider/Project3
  * Fall 2016
  */
 
